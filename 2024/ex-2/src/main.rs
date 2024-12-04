@@ -12,11 +12,11 @@ fn is_report_safe(line: &[u32]) -> bool {
     for couple in line.windows(2) {
         if couple[0] < couple[1] {
             asc = true;
-	} else if couple[0] > couple[1] {
-	    desc = true;
-	} else {
+        } else if couple[0] > couple[1] {
+            desc = true;
+        } else {
             return false;
-	}
+        }
 
         if couple[0].abs_diff(couple[1]) > 3 {
             return false;
@@ -33,7 +33,8 @@ fn is_report_safe(line: &[u32]) -> bool {
 fn first_part() -> u32 {
     let mut safe_reports: u32 = 0;
 
-    let lines: Vec<Vec<u32>> = read_file().lines()
+    let lines: Vec<Vec<u32>> = read_file()
+        .lines()
         .map(|line| {
             line.split_whitespace()
                 .map(|num| num.parse::<u32>().unwrap())
@@ -42,11 +43,10 @@ fn first_part() -> u32 {
         .collect();
 
     for line in &lines {
-	if is_report_safe(&line) {
-	    safe_reports += 1;
-	}
+        if is_report_safe(&line) {
+            safe_reports += 1;
+        }
     }
-    
 
     safe_reports
 }
@@ -54,29 +54,29 @@ fn first_part() -> u32 {
 fn second_part() -> u32 {
     let mut safe_reports: u32 = 0;
 
-    let lines: Vec<Vec<u32>> = read_file().lines()
+    let lines: Vec<Vec<u32>> = read_file()
+        .lines()
         .map(|line| {
             line.split_whitespace()
                 .map(|num| num.parse::<u32>().unwrap())
                 .collect::<Vec<_>>()
         })
-	.collect();
+        .collect();
 
     for line in &lines {
-	if is_report_safe(&line) {
+        if is_report_safe(&line) {
             safe_reports += 1;
         } else {
-	    for i in 0..line.len() {
-		let (left, right) = line.split_at(i);
-		let slice = [left, &right[1..]].concat();
-		if is_report_safe(&slice) {
-		    safe_reports += 1;
+            for i in 0..line.len() {
+                let (left, right) = line.split_at(i);
+                let slice = [left, &right[1..]].concat();
+                if is_report_safe(&slice) {
+                    safe_reports += 1;
                     break;
-		}
-	    }
+                }
+            }
         }
     }
-
 
     safe_reports
 }
